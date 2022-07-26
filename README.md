@@ -1,2 +1,2 @@
-# social-app
+# Social App
 Social media micro blogging app
