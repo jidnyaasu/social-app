@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<head>
+  {% if title %}
+    <title>{{ title }} -  Social App</title>
+  {% else %}
+    <title>Welcome to Social App</title>
+  {% endif %}
+</head>
+<body>
+<div>Social App: <a href="/index">Home</a></div>
+<hr>
+{% block content %}{% endblock %}
+</body>
+</html>

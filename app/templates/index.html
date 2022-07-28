@@ -1,0 +1,12 @@
+<!Doctype html>
+<html>
+<head>
+    <title>{{ title }} - Social App</title>
+</head>
+<body>
+<h1 style="color: green;">Welcome! {{ user.username }}</h1>
+{% for post in posts %}
+<div><p>{{ post.author.username }} says: <b>{{ post.post }}</b></p></div>
+{% endfor %}
+</body>
+</html>
