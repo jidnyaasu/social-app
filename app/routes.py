@@ -23,14 +23,11 @@ def index():
     # if current_user.is_anonymous:
     #     return redirect(url_for('login'))
 
-    return render_template("index.html", title="Home", user=current_user, posts=posts)
+    return render_template("index.html", title="Home", posts=posts)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if current_user.is_authenticated:
-        print("hi")
-        return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -39,7 +36,6 @@ def login():
             return redirect(url_for("login"))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get("next")
-        print(next_page)
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
         return redirect(next_page)
