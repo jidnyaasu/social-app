@@ -2,7 +2,17 @@
 
 {% block content %}
 <h1>Hi, {{ current_user.username }}!</h1>
+<form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.post.label }}<br>
+        <br>
+        {{ form.post(cols=40, rows=10) }}<br>
+    </p>
+    <p>{{ form.submit }}</p><br>
+</form>
 {% for post in posts %}
 <div><p>{{ post.author.username }} says: <b>{{ post.post }}</b></p></div>
+<br>
 {% endfor %}
 {% endblock %}
