@@ -1,15 +1,16 @@
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Post
 from werkzeug.urls import url_parse
 
 
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
+    user = current_user              # User.query.filter_by(username=current_user).first()
     posts = [
         {
             "author": {"username": "John"},
@@ -20,7 +21,13 @@ def index():
             "post": "Wakanda forever"
         }
     ]
-    return render_template("index.html", title="Home Page", posts=posts)
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, user_id=user.id)
+        db.session.add(post)
+        db.session.commit()
+        flash("Posted!!")
+    return render_template("index.html", title="Home Page", posts=posts, form=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -66,8 +73,9 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
+    # posts = [
+    #     {'author': user, 'body': 'Test post #1'},
+    #     {'author': user, 'body': 'Test post #2'}
+    # ]
+    posts = Post.query.filter_by(user_id=user.id)
     return render_template('user.html', user=user, posts=posts)
