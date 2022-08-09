@@ -12,7 +12,7 @@
     <p>{{ form.submit }}</p><br>
 </form>
 {% for post in posts %}
-<div><p>{{ post.author.username }} says: <b>{{ post.post }}</b></p></div>
+<div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
 <br>
 {% endfor %}
 {% endblock %}

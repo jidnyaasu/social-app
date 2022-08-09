@@ -10,20 +10,10 @@ from werkzeug.urls import url_parse
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
-    user = current_user              # User.query.filter_by(username=current_user).first()
-    posts = [
-        {
-            "author": {"username": "John"},
-            "post": "Lovely weather here in Alaska"
-         },
-        {
-            "author": {"username": "Thor"},
-            "post": "Wakanda forever"
-        }
-    ]
+    posts = Post.query.all()
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, user_id=user.id)
+        post = Post(body=form.post.data, user_id=current_user.id)
         db.session.add(post)
         db.session.commit()
         flash("Posted!!")
@@ -73,9 +63,5 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    # posts = [
-    #     {'author': user, 'body': 'Test post #1'},
-    #     {'author': user, 'body': 'Test post #2'}
-    # ]
     posts = Post.query.filter_by(user_id=user.id)
     return render_template('user.html', user=user, posts=posts)
