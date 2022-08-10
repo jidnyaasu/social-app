@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Hi, {{ current_user.username }}!</h1>
+<div>
 <form method="post" novalidate>
     {{ form.hidden_tag() }}
     <p>
@@ -11,8 +12,12 @@
     </p>
     <p>{{ form.submit }}</p><br>
 </form>
+</div>
+<div>
 {% for post in posts %}
-<div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-<br>
+{% if post.author.username != current_user.username %}
+<p>{{ post.author.username }} says: <b>{{ post.body }}</b></p><br>
+{% endif %}
 {% endfor %}
+</div>
 {% endblock %}

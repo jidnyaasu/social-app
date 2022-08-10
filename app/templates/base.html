@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
   {% if title %}
     <title>{{ title }} -  Social App</title>
   {% else %}
