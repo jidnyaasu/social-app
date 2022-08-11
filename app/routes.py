@@ -17,13 +17,14 @@ def index():
         db.session.add(post)
         db.session.commit()
         flash("Posted!!")
+        return redirect(url_for("index"))
     return render_template("index.html", title="Home Page", posts=posts, form=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -41,13 +42,13 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -55,8 +56,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash("Congratulations! You are now a registered user!")
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+        return redirect(url_for("login"))
+    return render_template("register.html", title="Register", form=form)
 
 
 @app.route("/user/<username>")
@@ -64,4 +65,4 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(user_id=user.id)
-    return render_template('user.html', user=user, posts=posts)
+    return render_template("user.html", user=user, posts=posts)
