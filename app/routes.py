@@ -4,6 +4,7 @@ from app.forms import LoginForm, RegistrationForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from werkzeug.urls import url_parse
+from datetime import datetime
 
 
 @app.route("/")
@@ -66,3 +67,10 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(user_id=user.id)
     return render_template("user.html", user=user, posts=posts)
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
