@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
   {% if title %}
     <title>{{ title }} -  Social App</title>
   {% else %}
@@ -14,6 +16,7 @@
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login') }}">Login</a>
     {% else %}
+    <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
     <a href="{{ url_for('logout') }}">Logout</a>
     {% endif %}
   </div>
