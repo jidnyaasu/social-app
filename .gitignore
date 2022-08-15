@@ -4,3 +4,4 @@ __pycache__/
 .flaskenv
 *.sqlite
 app.db
+logs/
