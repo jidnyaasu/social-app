@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField("Write something:", validators=[Length(min=0, max=140)])
+    post = TextAreaField("Write something:", validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField("Post")
 
 
@@ -48,3 +48,7 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username')
+
+
+class Emptyform(FlaskForm):
+    submit = SubmitField("Submit")

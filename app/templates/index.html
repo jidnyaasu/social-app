@@ -14,6 +14,9 @@
             {{ form.post.label }}<br>
             <br>
             {{ form.post(cols=40, rows=5) }}<br>
+            {% for error in form.post.errors %}
+                <span style="color: orange;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>{{ form.submit }}</p><br>
     </form>
