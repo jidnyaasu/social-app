@@ -1,31 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ current_user.avatar(128) }}"></td>
-            <td><h1>Hi, {{ current_user.username }}!</h1></td>
-        </tr>
-    </table>
     <div>
-    <form method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.post.label }}<br>
-            <br>
-            {{ form.post(cols=40, rows=5) }}<br>
-            {% for error in form.post.errors %}
-                <span style="color: orange;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit }}</p><br>
-    </form>
+        <h1>Hi, {{ current_user.username }}!</h1><br>
     </div>
+    {% if form %}
+    <div>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.post.label }}<br>
+                <br>
+                {{ form.post(cols=40, rows=5) }}<br>
+                {% for error in form.post.errors %}
+                    <span style="color: orange;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit }}</p><br>
+        </form><br>
+    </div>
+    {% endif %}
     <div>
     {% for post in posts %}
-        {% if post.author.username != current_user.username %}
-            {% include "_post.html" %}
-        {% endif %}
+        {% include "_post.html" %}
     {% endfor %}
+    </div><br><br>
+    <div>
+        {% if prev_url %}
+        <a href="{{ prev_url }}">Newer posts</a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}">Older posts</a>
+        {% endif %}
     </div>
 {% endblock %}
