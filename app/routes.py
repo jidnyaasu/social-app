@@ -18,14 +18,14 @@ def before_request():
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
-    posts = current_user.followed_posts()
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, user_id=current_user.id)
+        post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash("Posted!!")
         return redirect(url_for("index"))
+    posts = current_user.followed_posts()
     return render_template("index.html", title="Home Page", posts=posts, form=form)
 
 
