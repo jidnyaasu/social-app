@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ current_user.avatar(128) }}"></td>
-            <td><h1>Hi, {{ current_user.username }}!</h1></td>
-        </tr>
-    </table>
     <div>
-    <form method="post" novalidate>
+        <h1>Hi, {{ current_user.username }}!</h1><br>
+    </div>
+    <div>
+    <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
             {{ form.post.label }}<br>
@@ -19,13 +16,11 @@
             {% endfor %}
         </p>
         <p>{{ form.submit }}</p><br>
-    </form>
+    </form><br>
     </div>
     <div>
     {% for post in posts %}
-        {% if post.author.username != current_user.username %}
-            {% include "_post.html" %}
-        {% endif %}
+        {% include "_post.html" %}
     {% endfor %}
     </div>
 {% endblock %}
