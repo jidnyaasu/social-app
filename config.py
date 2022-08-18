@@ -14,3 +14,4 @@ class Config(object):
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
     ADMINS = [os.getenv("SOCIAL_APP_ADMIN")]
+    POSTS_PER_PAGE = 3
