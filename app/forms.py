@@ -52,3 +52,16 @@ class EditProfileForm(FlaskForm):
 
 class Emptyform(FlaskForm):
     submit = SubmitField("Submit")
+
+
+class RestPasswordRequestForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Request Password Reset")
+
+
+class PasswordChangeForm(FlaskForm):
+    current_password = PasswordField("Enter Current Password", validators=[DataRequired()])
+    new_password = PasswordField("Enter New Password", validators=[DataRequired()])
+    new_password2 = PasswordField(
+        "Confirm New Password", validators=[DataRequired(), EqualTo("new_password")])
+    submit = SubmitField("Set")

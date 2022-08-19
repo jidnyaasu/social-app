@@ -5,6 +5,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from werkzeug.urls import url_parse
 from datetime import datetime
+from app.email import send_password_reset_email
+from app.forms import RestPasswordRequestForm, PasswordChangeForm
 
 
 @app.before_request
@@ -156,3 +158,36 @@ def explore():
     prev_url = url_for("explore", page=posts.prev_num) if posts.has_prev else None
     return render_template("index.html", title="Explore",
                            posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+
+@app.route("/reset_password_request", methods=["GET", "POST"])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    form = RestPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash("Check your email for the instructions to reset your account password")
+        return redirect(url_for("login"))
+    return render_template("reset_password_request.html", title="Reset Password", form=form)
+
+
+@app.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    form = PasswordChangeForm()
+    if form.validate_on_submit():
+        if current_user.check_password(form.current_password.data):
+            if current_user.check_password(form.new_password.data):
+                flash("New password can't be same as current password")
+            else:
+                current_user.set_password(form.new_password.data)
+                db.session.commit()
+                flash("Password changed!")
+                return redirect(url_for("index"))
+        else:
+            flash("Enter correct password")
+
+    return render_template("change_password.html", title="Change Password", form=form)
