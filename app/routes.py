@@ -186,8 +186,7 @@ def change_password():
                 current_user.set_password(form.new_password.data)
                 db.session.commit()
                 flash("Password changed!")
-                return redirect(url_for("index"))
+                return redirect(url_for("edit_profile"))
         else:
             flash("Enter correct password")
-
     return render_template("change_password.html", title="Change Password", form=form)
