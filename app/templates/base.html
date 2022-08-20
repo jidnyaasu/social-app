@@ -4,7 +4,7 @@
     {% if title %}{{ title }} -  Social App{% else %}Welcome to Social App{% endif %}
 {% endblock %}
 
-{% block head%}
+{% block head %}
     {{ super() }}
     <link href="{{ url_for('static', filename='favicon.ico') }}" rel="icon" type="image/x-icon">
 {% endblock %}
@@ -52,4 +52,9 @@
 
         {% block app_content %}{% endblock %}
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
 {% endblock %}
