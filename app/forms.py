@@ -61,10 +61,10 @@ class RestPasswordRequestForm(FlaskForm):
 
 class PasswordChangeForm(FlaskForm):
     current_password = PasswordField("Enter Current Password", validators=[DataRequired()])
-    new_password = PasswordField("Enter New Password", validators=[DataRequired()])
-    new_password2 = PasswordField(
-        "Confirm New Password", validators=[DataRequired(), EqualTo("new_password")])
-    submit = SubmitField("Set")
+    password = PasswordField("Enter New Password", validators=[DataRequired()])
+    password2 = PasswordField(
+        "Confirm New Password", validators=[DataRequired(), EqualTo("password")])
+    submit = SubmitField("Change Password")
 
 
 class ResetPasswordForm(FlaskForm):

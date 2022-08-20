@@ -180,10 +180,10 @@ def change_password():
     form = PasswordChangeForm()
     if form.validate_on_submit():
         if current_user.check_password(form.current_password.data):
-            if current_user.check_password(form.new_password.data):
+            if current_user.check_password(form.password.data):
                 flash("New password can't be same as current password")
             else:
-                current_user.set_password(form.new_password.data)
+                current_user.set_password(form.password.data)
                 db.session.commit()
                 flash("Password changed!")
                 return redirect(url_for("edit_profile"))
