@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, g
 from app.forms import LoginForm, RegistrationForm, PostForm, EditProfileForm, Emptyform
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
@@ -7,7 +7,7 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 from app.email import send_password_reset_email
 from app.forms import RestPasswordRequestForm, PasswordChangeForm, ResetPasswordForm
-from flask_babel import _, lazy_gettext as _l
+from flask_babel import _, get_locale
 
 
 @app.before_request
@@ -15,6 +15,7 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+        g.locale = str(get_locale())
 
 
 @app.route("/")
