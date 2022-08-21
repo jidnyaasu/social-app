@@ -6,3 +6,5 @@ __pycache__/
 app.db
 logs/
 *.db
+messages.pot
+translations/
