@@ -3,7 +3,7 @@
 {% block app_content %}
     <table class="table table-hover">
         <tr>
-            <td width="256px"><img src="{{ user.avatar(128) }}"></td>
+            <td width="130px"><img src="{{ user.avatar(128) }}"></td>
             <td>
                 <h1>{{ _("User") }}: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
@@ -16,12 +16,12 @@
                 {% elif not current_user.is_following(user) %}
                 <form action="{{ url_for('follow', username=user.username) }}" method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value="Follow") }}
+                    {{ form.submit(value=_('Follow'), class_='btn btn-default') }}
                 </form>
                 {% else %}
                 <form action="{{ url_for('unfollow', username=user.username) }}" method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value="Unfollow") }}
+                    {{ form.submit(value=_('Unfollow'), class_='btn btn-default') }}
                 </form>
                 {% endif %}
             </td>
