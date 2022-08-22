@@ -16,3 +16,4 @@ class Config(object):
     ADMINS = [os.getenv("SOCIAL_APP_ADMIN")]
     POSTS_PER_PAGE = 5
     LANGUAGES = ["en", "es", "mr", "hi"]
+    TRANSLATOR_URL = os.getenv("TRANSLATOR_URL")
