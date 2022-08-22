@@ -1,0 +1,113 @@
+.post-container {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 30px;
+width: auto;
+height: auto;
+justify-content: center;
+}
+
+.card {
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 32px;
+gap: 30px;
+
+position: relative;
+width: 550px;
+height: auto;
+min-height: 225px;
+flex-grow: 1;
+
+background: rgba(249, 249, 249, 0.75);
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+border-radius: 20px;
+}
+
+.circle {
+width: 55px;
+height: 55px;
+background: #D9D9D9;
+flex: none;
+order: 0;
+flex-grow: 0;
+border-radius: 50%;
+}
+
+.postcard {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px 12px 12px 12px;
+gap: 10px;
+
+width: 374px;
+height: auto;
+
+flex: none;
+order: 1;
+flex-grow: 1;
+}
+
+.name {
+width: 350px;
+height: 25px;
+
+font-family: 'Nunito Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 25px;
+
+color: #000000;
+
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+}
+
+.post-outer {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+}
+
+.post {
+width: 350px;
+height: auto;
+
+font-family: 'Nunito Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 25px;
+
+color: #000000;
+
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+}
+
+.translate {
+width: 350px;
+height: auto;
+
+font-family: 'Nunito Sans';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 25px;
+
+color: #000000;
+
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+}
