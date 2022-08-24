@@ -1,13 +1,13 @@
 import requests
 from flask_babel import _
-from app import app
+from flask import current_app
 
 
 def translate(text, source_lang, target_lang):
-    if "TRANSLATOR_URL" not in app.config or \
-            not app.config["TRANSLATOR_URL"]:
+    if "TRANSLATOR_URL" not in current_app.config or \
+            not current_app.config["TRANSLATOR_URL"]:
         return _("Error: the translation service is not configured.")
-    url = app.config["TRANSLATOR_URL"]
+    url = current_app.config["TRANSLATOR_URL"]
     params = {
         "source_lang": source_lang,
         "target_lang": target_lang,
