@@ -9,7 +9,7 @@
         </div>
     </div>
     <br>
-    <div><a href="{{ url_for('change_password') }}">{{ _("Change Password") }}</a></div><br>
+    <div><a href="{{ url_for('auth.change_password') }}">{{ _("Change Password") }}</a></div><br>
     <br>
-    <div><a href="{{ url_for('index') }}">{{ _("Back") }}</a></div>
+    <div><a href="{{ url_for('user', username=current_user.username) }}">{{ _("Back") }}</a></div>
 {% endblock %}
