@@ -1,10 +1,9 @@
 .idea/
 venv/
 __pycache__/
-.flaskenv
 *.sqlite
-app.db
-logs/
 *.db
+logs/
 messages.pot
 translations/
+.env
