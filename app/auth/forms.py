@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, Email, ValidationError, EqualTo, Length
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from flask_babel import _, lazy_gettext as _l
 from app.models import User
-from flask_babel import lazy_gettext as _l, _
 
 
 class LoginForm(FlaskForm):
@@ -30,42 +30,17 @@ class RegistrationForm(FlaskForm):
             raise ValidationError(_("Please use a different email address"))
 
 
-class PostForm(FlaskForm):
-    post = TextAreaField(_l("Write something:"), validators=[DataRequired(), Length(min=1, max=140)])
-    submit = SubmitField(_l("Post"))
-
-
-class EditProfileForm(FlaskForm):
-    username = StringField(_l("username"), validators=[DataRequired()])
-    about_me = TextAreaField(_l("About me"), validators=[Length(min=0, max=140)])
-    submit = SubmitField(_l("Submit"))
-
-    def __init__(self, original_username, *args, **kwargs):
-        super(EditProfileForm, self).__init__(*args, **kwargs)
-        self.original_username = original_username
-
-    def validate_username(self, username):
-        if username.data != self.original_username:
-            user = User.query.filter_by(username=self.username.data).first()
-            if user is not None:
-                raise ValidationError(_("Please use a different username"))
-
-
-class Emptyform(FlaskForm):
-    submit = SubmitField("Submit")
-
-
-class RestPasswordRequestForm(FlaskForm):
-    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
-    submit = SubmitField(_l("Request Password Reset"))
-
-
 class PasswordChangeForm(FlaskForm):
     current_password = PasswordField(_l("Enter Current Password"), validators=[DataRequired()])
     password = PasswordField(_l("Enter New Password"), validators=[DataRequired()])
     password2 = PasswordField(
         _l("Confirm New Password"), validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField(_l("Change Password"))
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField(_l("Email"), validators=[DataRequired(), Email()])
+    submit = SubmitField(_l("Request Password Reset"))
 
 
 class ResetPasswordForm(FlaskForm):
