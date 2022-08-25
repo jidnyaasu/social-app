@@ -10,6 +10,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from elasticsearch import Elasticsearch
 
 from config import Config
 
@@ -35,6 +36,14 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     moment.init_app(app)
     babel.init_app(app)
+    app.elasticsearch = Elasticsearch(
+        app.config["ELASTICSEARCH_URL"],
+        ca_certs=app.config["ELASTIC_CA_CERTS"],
+        basic_auth=(
+            app.config["ELASTIC_USERNAME"], app.config["ELASTIC_PASSWORD"]
+        )
+    ) \
+        if app.config["ELASTICSEARCH_URL"] else None
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
@@ -81,7 +90,6 @@ def create_app(config_class=Config):
 @babel.localeselector
 def get_locale():
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
-    # return "mr"
 
 
 from app import models
