@@ -43,7 +43,7 @@ def create_app(config_class=Config):
             app.config["ELASTIC_USERNAME"], app.config["ELASTIC_PASSWORD"]
         )
     ) \
-        if app.config["ELASTICSEARCH_URL"] else None
+        if app.config.get("ELASTICSEARCH_URL") else None
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
