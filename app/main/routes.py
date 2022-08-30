@@ -22,7 +22,7 @@ def before_request():
     g.locale = str(get_locale())
 
 
-@bp.route("/")
+@bp.route("/", methods=["GET", "POST"])
 @bp.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
@@ -137,7 +137,6 @@ def translate_text():
     return jsonify({"text": translate(request.form["text"],
                                       request.form["source_lang"],
                                       request.form["target_lang"])})
-
 
 # @bp.route("/search")
 # @login_required
