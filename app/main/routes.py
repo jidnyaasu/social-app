@@ -36,6 +36,7 @@ def index():
         db.session.add(post)
         db.session.commit()
         flash(_("Posted!!"))
+        current_app.logger.info(f"User {current_user.username} posted")
         return redirect(url_for("main.index"))
     page = request.args.get("page", 1, type=int)
     posts = current_user.followed_posts().paginate(

@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, request, url_for
+from flask import render_template, flash, redirect, request, url_for, current_app
 from app.auth.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, \
     ResetPasswordForm, PasswordChangeForm
 from werkzeug.urls import url_parse
@@ -24,12 +24,14 @@ def login():
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("main.index")
+        current_app.logger.info(f"User {current_user.username} logged in")
         return redirect(next_page)
     return render_template("auth/login.html", title="Sign In", form=form)
 
 
 @bp.route("/logout")
 def logout():
+    current_app.logger.info(f"User {current_user.username} logged out")
     logout_user()
     return redirect(url_for("main.index"))
 
@@ -45,6 +47,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(_("Congratulations! You are now a registered user!"))
+        current_app.logger.info(f"New user {form.username.data} registered")
         return redirect(url_for("auth.login"))
     return render_template("auth/register.html", title="Register", form=form)
 
@@ -61,6 +64,7 @@ def change_password():
                 current_user.set_password(form.password.data)
                 db.session.commit()
                 flash(_("Password changed!"))
+                current_app.logger.info(f"User {current_user.username} changed password")
                 return redirect(url_for("edit_profile"))
         else:
             flash(_("Enter correct password"))
