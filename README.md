@@ -1,2 +1,2 @@
 # Social App
-Social media micro blogging app
+A micro blogging app
